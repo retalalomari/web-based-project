@@ -1,0 +1,171 @@
+<html>
+    <head>
+        <title>
+            </title>
+            
+            <link rel="stylesheet" href = "home css.css">
+            <style>
+                #para1{
+    text-align: right;
+
+ }
+ body {
+      font-family: Arial, sans-serif;
+     font-size: 26px;
+    }
+
+    
+    #error-message {
+      color: red;
+      
+    }
+
+    #phone-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+
+        .error-message {
+            color: red;
+        }
+            </style>
+        
+      </head>
+      <body>
+
+
+
+
+
+
+            <header>
+                <img src = "logo.jpeg.jpg" alt ="logo">     
+                        
+                         <div id ="para1"><input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." title="Type in a category">
+                        <center>
+                            <div>
+                                <button><a href="home.html">Home</a></button>
+                                <button> <a href ="makeup.html"> product of make up </a>   </button>
+                                <button> <a href ="skincare.html"> product of skincare </a></button>
+                                <button><a href ="Contact.html"> Contact us</a></button>
+                                <button><a href ="about us.html"> About us</a> </button>
+                          
+                                </div>
+                                </center>
+                                
+                           </header>
+
+                        
+<label for="username">Username:</label>
+<input type="text" id="username" name="name" placeholder="enter username" maxlength="10">
+<br>
+<label for="phoneNumber">Phone Number</label>
+<input type="text" id="phoneNumber" name="phone" placeholder="enter phone" maxlength="10">
+<br>
+
+<label>Email</label>
+<input type="email" id="email" name="Email" placeholder="Enter Email">
+<br>
+<label>Age:</label>
+<input type="radio" id="age1" name="age" value="18-28">
+<label for="age1">18-28</label>
+<input type="radio" id="age2" name="age" value="29-39">
+<label for="age2">29-39</label>
+<input type="radio" id="age3" name="age" value="40-60">
+<label for="age3">40-60</label>
+<br>
+<label>Interests:</label>
+<input type="checkbox" id="skincare" name="interests" value="skincare">
+<label for="skincare">Skincare</label>
+<input type="checkbox" id="makeup" name="interests" value="makeup">
+<label for="makeup">Makeup</label>
+
+<button id="btn1" onclick="validateForm()">Click me</button>
+<div id="output1"></div>
+<div id="errors" style="color: red;"></div>
+<br>
+
+<textarea class="report" id="output2" rows="10" cols="50" readonly></textarea>
+
+<script>
+   const txt1 = document.getElementById('username');
+    const phn1 = document.getElementById('phoneNumber');
+    const age = document.getElementsByName('age');
+    const email = document.getElementById('email');
+    const interests = document.getElementsByName('interests');
+    const btn1 = document.getElementById('btn1');
+    const out1 = document.getElementById('output1');
+    const out2 = document.getElementById('output2');
+    const errorsDiv = document.getElementById('errors');
+    function validateForm() {
+        errorsDiv.innerHTML = ""; // Clear previous errors
+
+        if (txt1.value.trim() === "") {
+            displayError("Please enter a username.");
+            return;
+        }
+
+        if (phn1.value.trim() === "" || isNaN(phn1.value.trim()) || phn1.value.length !== 10) {
+            displayError("Please enter a valid 10-digit phone number.");
+            return;
+        }
+
+        if (email.value.trim() === "") {
+            displayError("Please enter an email address.");
+            return;
+        }
+
+        if (!getSelectedRadioValue(age)) {
+            displayError("Please select an age range.");
+            return;
+        }
+
+        if (!getSelectedCheckboxValues(interests)) {
+            displayError("Please select at least one interest.");
+            return;
+        }
+
+        fun1(); // Proceed if validation passes
+    }
+
+    function displayError(message) {
+        errorsDiv.innerHTML += message + "<br>";
+    }
+
+   function fun1() {
+        out1.innerHTML = "Username: " + txt1.value ;
+        out1.innerHTML += "Phone Number: " + phn1.value ;
+        out1.innerHTML += "Age: " + getSelectedRadioValue(age) ;
+        out1.innerHTML += "Email: " + email.value ;
+        out1.innerHTML += "Interests: " + getSelectedCheckboxValues(interests);
+
+        // Update the textarea with the collected data
+        updateTextarea();
+    }
+ 
+
+    function getSelectedRadioValue(radioNodeList) {
+        for (const radio of radioNodeList) {
+            if (radio.checked) {
+                return radio.value;
+            }
+        }
+        return null;
+    }
+
+    function getSelectedCheckboxValues(checkboxNodeList) {
+        const values = [];
+        for (const checkbox of checkboxNodeList) {
+            if (checkbox.checked) {
+                values.push(checkbox.value);
+            }
+        }
+        return values.length > 0 ? values.join(', ') : null;
+    }
+
+    function updateTextarea() {
+        out2.value = out1.innerHTML;
+    }
+</script>
+
